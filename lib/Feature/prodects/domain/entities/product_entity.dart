@@ -1,6 +1,6 @@
 import 'package:shop_task/Feature/prodects/domain/entities/reviews_entities.dart';
 
-class ProductEntities {
+class ProductEntity {
   final String? title;
   final String? shippingInformation;
   final double? price;
@@ -8,7 +8,7 @@ class ProductEntities {
   final List<Reviews>? reviews;
   final List<String>? images;
 
-  ProductEntities({
+  ProductEntity({
     required this.title,
     required this.shippingInformation,
     required this.price,
