@@ -1,11 +1,11 @@
-import 'package:shop_task/Feature/prodects/domain/entities/reviews_entities.dart';
+import 'package:shop_task/Feature/prodects/domain/entities/sub_entities/reviews_entity.dart';
 
 class ProductEntity {
   final String? title;
   final String? shippingInformation;
   final double? price;
   final double? rating;
-  final List<Reviews>? reviews;
+  final List<ReviewsEntity>? reviews;
   final List<String>? images;
 
   ProductEntity({
