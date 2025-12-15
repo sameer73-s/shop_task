@@ -8,21 +8,31 @@ class ProductLocalDatasource {
   final CacheHelper cache;
 
   ProductLocalDatasource({required this.cache});
-  cacheProduct(ProductModel? producttoCache) {
+  cacheProduct(List<ProductModel>? producttoCache) {
     if (producttoCache != null) {
       cache.saveData(
         key: 'cachedproduct',
-        value: json.encode(producttoCache.toJson()),
+        value: json.encode(
+          producttoCache
+              .map<Map<String, dynamic>>(
+                (productmodel) => productmodel.toJson(),
+              )
+              .toList(),
+        ),
       );
     } else {
       throw CacheExeption(errorMessage: "no internet connection");
     }
   }
 
-  Future<ProductModel> getLastProduct() async {
+  Future<List<ProductModel>> getLastProduct() async {
     final jsonString = await cache.getData(key: 'cachedproduct');
     if (jsonString != null) {
-      return ProductModel.fromJson(json.decode(jsonString));
+      final List products = json.decode(jsonString);
+      final List<ProductModel> productlist = products
+          .map((product) => ProductModel.fromJson(product))
+          .toList();
+      return productlist;
     } else {
       throw CacheExeption(errorMessage: "no cached data found");
     }

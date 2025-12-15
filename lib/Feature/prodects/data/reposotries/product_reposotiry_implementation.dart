@@ -6,7 +6,6 @@ import 'package:shop_task/Feature/prodects/domain/reposotories/product_reposotor
 import 'package:shop_task/core/connection/network_info.dart';
 import 'package:shop_task/core/errors/expentions.dart';
 import 'package:shop_task/core/errors/failure.dart';
-import 'package:shop_task/core/params/params.dart';
 
 class ProductReposotiryImplementation extends ProductReposotory {
   final NetworkInfo networkInfo;
@@ -20,16 +19,14 @@ class ProductReposotiryImplementation extends ProductReposotory {
   });
 
   @override
-  Future<Either<Failure, ProductEntity>> getproducts({
-    required productsParams params,
-  }) async {
+  Future<Either<Failure, List<ProductEntity>>> getproducts() async {
     if (await networkInfo.isConnected!) {
       try {
-        final remoteproduct = await remoteDatasource.getproduct(params);
+        final remoteproduct = await remoteDatasource.getproduct();
         localDatasource.cacheProduct(remoteproduct);
         return right(remoteproduct);
       } on ServerException catch (e) {
-        return Left(Failure(errMessage: e.errorModel.errorMessage));
+        return Left(ServerFailure());
       }
     } else {}
 
@@ -37,7 +34,7 @@ class ProductReposotiryImplementation extends ProductReposotory {
       final localproduct = await localDatasource.getLastProduct();
       return right(localproduct);
     } on CacheExeption catch (e) {
-      return Left(Failure(errMessage: e.errorMessage));
+      return Left(EmptyCacheFailure());
     }
   }
 }
