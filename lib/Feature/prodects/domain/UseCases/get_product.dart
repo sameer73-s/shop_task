@@ -6,7 +6,7 @@ import 'package:shop_task/core/errors/failure.dart';
 class GetProductUseCase {
   final ProductReposotory reposotory;
 
-  GetProductUseCase({required this.reposotory});
+  GetProductUseCase(this.reposotory);
   Future<Either<Failure, List<ProductEntity>>> call() async {
     return reposotory.getproducts();
   }

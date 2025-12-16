@@ -7,7 +7,7 @@ import 'package:shop_task/core/errors/expentions.dart';
 class ProductLocalDatasource {
   final CacheHelper cache;
 
-  ProductLocalDatasource({required this.cache});
+  ProductLocalDatasource(this.cache, {required Object sharedPreferences});
   cacheProduct(List<ProductModel>? producttoCache) {
     if (producttoCache != null) {
       cache.saveData(
