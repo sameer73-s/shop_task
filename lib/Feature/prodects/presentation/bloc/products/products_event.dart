@@ -5,9 +5,13 @@ sealed class ProductsEvent extends Equatable {
   const ProductsEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
-class getProductsEvent extends ProductsEvent {}
+class GetProductsEvent extends ProductsEvent {}
 
-class refreshProductsEvent extends ProductsEvent {}
+class RefreshProductsEvent extends ProductsEvent {}
+
+class SwitchProductsEvent extends ProductsEvent {}
+
+class LoadMoreProductsEvent extends ProductsEvent {}

@@ -7,7 +7,7 @@ class GetProductUseCase {
   final ProductReposotory reposotory;
 
   GetProductUseCase(this.reposotory);
-  Future<Either<Failure, List<ProductEntity>>> call() async {
-    return reposotory.getproducts();
+  Future<Either<Failure, List<ProductEntity>>> call({required int page}) async {
+    return reposotory.getproducts(page: page);
   }
 }

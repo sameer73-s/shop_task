@@ -8,4 +8,22 @@ class ReveiwModel extends ReviewsEntity {
     required super.reviewerName,
     required super.reviewerEmail,
   });
+  factory ReveiwModel.fromJson(Map<String, dynamic> json) {
+    return ReveiwModel(
+      rating: json['rating'],
+      comment: json['comment'],
+      date: json['date'],
+      reviewerName: json['reviewerName'],
+      reviewerEmail: json['reviewerEmail'],
+    );
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'rating': rating,
+      'comment': comment,
+      'date': date,
+      'reviewerName': reviewerName,
+      'reviewerEmail': reviewerEmail,
+    };
+  }
 }

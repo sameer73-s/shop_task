@@ -19,13 +19,17 @@ class ProductReposotiryImplementation extends ProductReposotory {
   });
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getproducts() async {
+  Future<Either<Failure, List<ProductEntity>>> getproducts({
+    required int page,
+  }) async {
     if (await networkInfo.isConnected!) {
       try {
-        final remoteproduct = await remoteDatasource.getproduct();
+        final remoteproduct = await remoteDatasource.getproduct(page: page);
         localDatasource.cacheProduct(remoteproduct);
         return right(remoteproduct);
       } on ServerException catch (e) {
+        return Left(ServerFailure());
+      } catch (e) {
         return Left(ServerFailure());
       }
     } else {}

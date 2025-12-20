@@ -4,5 +4,5 @@ import 'package:shop_task/core/errors/failure.dart';
 
 // ignore: unused_element
 abstract class ProductReposotory {
-  Future<Either<Failure, List<ProductEntity>>> getproducts();
+  Future<Either<Failure, List<ProductEntity>>> getproducts({required int page});
 }

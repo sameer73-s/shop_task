@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+/*import 'package:dio/dio.dart';
 import 'package:shop_task/core/database/api/api_consumer.dart';
 import 'package:shop_task/core/database/api/end_points.dart';
 import 'package:shop_task/core/errors/expentions.dart';
@@ -86,4 +86,4 @@ class DioConsumer extends ApiConsumer {
       handleDioException(e);
     }
   }
-}
+}*/
