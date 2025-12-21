@@ -16,6 +16,7 @@ class _ShopPageState extends State<ShopPage> {
   @override
   void initState() {
     super.initState();
+    context.read<ProductsBloc>().add(GetProductsEvent());
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent) {

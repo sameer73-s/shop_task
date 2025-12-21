@@ -7,10 +7,10 @@ import 'package:shop_task/core/connection/network_info.dart';
 import 'package:shop_task/core/errors/expentions.dart';
 import 'package:shop_task/core/errors/failure.dart';
 
-class ProductReposotiryImplementation extends ProductReposotory {
+class ProductReposotiryImplementation implements ProductReposotory {
   final NetworkInfo networkInfo;
   final ProductRemoteDatasource remoteDatasource;
-  final ProductLocalDatasource localDatasource;
+  final ProductLocalDatasourceSqlite localDatasource;
 
   ProductReposotiryImplementation({
     required this.networkInfo,
@@ -22,23 +22,24 @@ class ProductReposotiryImplementation extends ProductReposotory {
   Future<Either<Failure, List<ProductEntity>>> getproducts({
     required int page,
   }) async {
-    if (await networkInfo.isConnected!) {
+    if (await networkInfo.isConnected) {
       try {
-        final remoteproduct = await remoteDatasource.getproduct(page: page);
-        localDatasource.cacheProduct(remoteproduct);
-        return right(remoteproduct);
-      } on ServerException catch (e) {
-        return Left(ServerFailure());
-      } catch (e) {
+        final remoteProducts = await remoteDatasource.getproduct(page: page);
+
+        await localDatasource.cacheProducts(remoteProducts);
+
+        return Right(remoteProducts);
+      } on ServerException {
         return Left(ServerFailure());
       }
-    } else {}
+    } else {
+      try {
+        final localProducts = await localDatasource.getCachedProducts();
 
-    try {
-      final localproduct = await localDatasource.getLastProduct();
-      return right(localproduct);
-    } on CacheExeption catch (e) {
-      return Left(EmptyCacheFailure());
+        return Right(localProducts);
+      } on CacheExeption {
+        return Left(EmptyCacheFailure());
+      }
     }
   }
 }

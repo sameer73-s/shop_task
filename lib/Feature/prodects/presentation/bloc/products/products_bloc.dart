@@ -57,7 +57,6 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     );
   }
 
-  // ===================== Refresh Products =====================
   Future<void> _onRefreshProducts(
     RefreshProductsEvent event,
     Emitter<ProductsState> emit,
@@ -86,7 +85,6 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     );
   }
 
-  // ===================== Load More Products =====================
   Future<void> _onLoadMoreProducts(
     LoadMoreProductsEvent event,
     Emitter<ProductsState> emit,
@@ -111,7 +109,6 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     _isFetching = false;
   }
 
-  // ===================== Switch List / Grid =====================
   void _onSwitchView(SwitchProductsEvent event, Emitter<ProductsState> emit) {
     if (state is ProductsLoadedState) {
       final currentState = state as ProductsLoadedState;
@@ -120,7 +117,6 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     }
   }
 
-  // ===================== Mapper =====================
   ProductsState _mapFailureOrProductsToState(
     Either<Failure, List<ProductEntity>> either,
     bool? islist,
@@ -135,7 +131,6 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     );
   }
 
-  // ===================== Failure Messages =====================
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case ServerFailure:

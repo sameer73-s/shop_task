@@ -26,4 +26,13 @@ class MetaModel {
       'qrCode': qrCode,
     };
   }
+
+  factory MetaModel.empty() {
+    return MetaModel(
+      createdAt: null,
+      updatedAt: null,
+      barcode: null,
+      qrCode: null,
+    );
+  }
 }

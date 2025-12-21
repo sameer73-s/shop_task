@@ -35,7 +35,6 @@ class ProductGridWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                /// Image
                 Expanded(
                   child: Container(
                     width: double.infinity,
@@ -58,7 +57,6 @@ class ProductGridWidget extends StatelessWidget {
 
                 const SizedBox(height: 8),
 
-                /// Title
                 Text(
                   product.title ?? '',
                   maxLines: 2,
@@ -68,7 +66,6 @@ class ProductGridWidget extends StatelessWidget {
 
                 const SizedBox(height: 4),
 
-                /// Price
                 Text(
                   '\$${product.price?.toStringAsFixed(2) ?? '0.00'}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
@@ -76,7 +73,6 @@ class ProductGridWidget extends StatelessWidget {
 
                 const SizedBox(height: 4),
 
-                /// Rating
                 Row(
                   children: List.generate(5, (i) {
                     return Icon(

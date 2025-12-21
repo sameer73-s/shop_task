@@ -8,7 +8,7 @@ import 'package:shop_task/Feature/prodects/domain/UseCases/get_product.dart';
 import 'package:shop_task/Feature/prodects/domain/reposotories/product_reposotory.dart';
 import 'package:shop_task/Feature/prodects/presentation/bloc/products/products_bloc.dart';
 import 'package:shop_task/core/connection/network_info.dart';
-import 'package:shop_task/core/database/cache/cache_helper.dart';
+import 'package:shop_task/core/database/sqlite/database_helper.dart';
 
 final sl = GetIt.instance;
 Future<void> init() async {
@@ -31,16 +31,16 @@ Future<void> init() async {
     () => ProductRemoteDatasource(),
   );
 
-  sl.registerLazySingleton<ProductLocalDatasource>(
-    () => ProductLocalDatasource(sl()),
+  sl.registerLazySingleton<ProductLocalDatasourceSqlite>(
+    () => ProductLocalDatasourceSqlite(sl()),
   );
 
   //core
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+  sl.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper.instance);
 
   //external
 
   sl.registerLazySingleton(() => http.Client());
   sl.registerLazySingleton(() => InternetConnectionChecker.createInstance());
-  sl.registerLazySingleton(() => CacheHelper());
 }

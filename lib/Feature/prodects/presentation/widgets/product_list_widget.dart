@@ -24,7 +24,6 @@ class ProductListWidget extends StatelessWidget {
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// Product Image
             Container(
               width: 90,
               height: 90,
@@ -45,7 +44,6 @@ class ProductListWidget extends StatelessWidget {
 
             const SizedBox(width: 12),
 
-            /// Product Info
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +61,6 @@ class ProductListWidget extends StatelessWidget {
 
                   const SizedBox(height: 4),
 
-                  /// Shipping Info
                   Text(
                     product.shippingInformation ?? '',
                     style: const TextStyle(fontSize: 12, color: Colors.grey),
@@ -71,7 +68,6 @@ class ProductListWidget extends StatelessWidget {
 
                   const SizedBox(height: 6),
 
-                  /// Price
                   Text(
                     '\$${product.price?.toStringAsFixed(2) ?? '0.00'}',
                     style: const TextStyle(
@@ -82,7 +78,6 @@ class ProductListWidget extends StatelessWidget {
 
                   const SizedBox(height: 6),
 
-                  /// Rating + Reviews
                   Row(
                     children: [
                       ...List.generate(5, (i) {

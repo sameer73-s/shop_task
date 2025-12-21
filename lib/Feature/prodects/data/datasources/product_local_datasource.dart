@@ -1,42 +1,37 @@
-import 'dart:convert';
-
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shop_task/Feature/prodects/data/models/product_model.dart';
-import 'package:shop_task/core/database/cache/cache_helper.dart';
 import 'package:shop_task/core/errors/expentions.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:shop_task/core/database/sqlite/database_helper.dart';
+import 'package:shop_task/Feature/prodects/data/models/product_model.dart';
 
-class ProductLocalDatasource {
-  final CacheHelper cache;
+class ProductLocalDatasourceSqlite {
+  final DatabaseHelper databaseHelper;
 
-  ProductLocalDatasource(
-    this.cache);
-  void cacheProduct(List<ProductModel>? producttoCache) {
-    if (producttoCache != null) {
-      cache.saveData(
-        key: 'cachedproduct',
-        value: json.encode(
-          producttoCache
-              .map<Map<String, dynamic>>(
-                (productmodel) => productmodel.toJson(),
-              )
-              .toList(),
-        ),
+  ProductLocalDatasourceSqlite(this.databaseHelper);
+  Future<void> cacheProducts(List<ProductModel> products) async {
+    final Database db = await databaseHelper.database;
+
+    final batch = db.batch();
+
+    for (final product in products) {
+      batch.insert(
+        'products',
+        product.toDbMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
       );
-    } else {
-      throw CacheExeption(errorMessage: "no internet connection");
     }
+
+    await batch.commit(noResult: true);
   }
 
-  Future<List<ProductModel>> getLastProduct() async {
-    final jsonString = await cache.getData(key: 'cachedproduct');
-    if (jsonString != null) {
-      final List products = json.decode(jsonString);
-      final List<ProductModel> productlist = products
-          .map((product) => ProductModel.fromJson(product))
-          .toList();
-      return productlist;
-    } else {
+  Future<List<ProductModel>> getCachedProducts() async {
+    final Database db = await databaseHelper.database;
+
+    final result = await db.query('products');
+
+    if (result.isEmpty) {
       throw CacheExeption(errorMessage: "no cached data found");
     }
+
+    return result.map((map) => ProductModel.fromDb(map)).toList();
   }
 }

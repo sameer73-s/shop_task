@@ -18,4 +18,8 @@ class DimensionsModel {
   Map<String, dynamic> toJson() {
     return {'width': width, 'height': height, 'depth': depth};
   }
+
+  factory DimensionsModel.empty() {
+    return DimensionsModel(width: null, height: null, depth: null);
+  }
 }

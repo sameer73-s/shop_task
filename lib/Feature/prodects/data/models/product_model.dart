@@ -1,9 +1,8 @@
-import 'package:flutter/foundation.dart';
+import 'dart:convert';
 import 'package:shop_task/Feature/prodects/data/models/sub_models/dimensions_model.dart';
 import 'package:shop_task/Feature/prodects/data/models/sub_models/meta_model.dart';
 import 'package:shop_task/Feature/prodects/data/models/sub_models/reveiw_model.dart';
 import 'package:shop_task/Feature/prodects/domain/entities/product_entity.dart';
-import 'package:shop_task/Feature/prodects/domain/entities/sub_entities/reviews_entity.dart';
 
 class ProductModel extends ProductEntity {
   ProductModel({
@@ -99,6 +98,49 @@ class ProductModel extends ProductEntity {
       'images': images,
       'shippingInformation': shippingInformation,
       'thumbnail': thumbnail,
+    };
+  }
+
+  factory ProductModel.fromDb(Map<String, dynamic> map) {
+    return ProductModel(
+      id: map['id'] as int?,
+      title: map['title'] as String?,
+      shippingInformation: map['shippingInformation'] as String?,
+      price: map['price'] as double?,
+      rating: map['rating'] as double?,
+      images: List<String>.from(jsonDecode(map['images'] as String)),
+      reviews: (jsonDecode(map['reviews'] as String) as List)
+          .map((r) => ReveiwModel.fromJson(r))
+          .toList(),
+
+      description: null,
+      category: null,
+      discountPercentage: null,
+      stock: null,
+      tags: [],
+      brand: null,
+      sku: null,
+      weight: null,
+      dimensions: DimensionsModel.empty(),
+      warrantyInformation: null,
+      availabilityStatus: null,
+      returnPolicy: null,
+      minimumOrderQuantity: null,
+      meta: MetaModel.empty(),
+      thumbnail: null,
+    );
+  }
+  Map<String, dynamic> toDbMap() {
+    return {
+      'id': id,
+      'title': title,
+      'shippingInformation': shippingInformation,
+      'price': price,
+      'rating': rating,
+      'images': jsonEncode(images),
+      'reviews': jsonEncode(
+        reviews?.map((e) => (e as ReveiwModel).toJson()).toList(),
+      ),
     };
   }
 }

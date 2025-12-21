@@ -6,9 +6,7 @@ import 'package:http/http.dart' as http;
 
 class ProductRemoteDatasource {
   ProductRemoteDatasource();
-  Future<List<ProductModel>> getproduct({
-    required int page,
-  }) async {
+  Future<List<ProductModel>> getproduct({required int page}) async {
     final url = EndPoints.baseUrl + EndPoints.products(page: page);
     final response = await http.get(Uri.parse(url));
 
