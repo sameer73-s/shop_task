@@ -52,6 +52,7 @@ class _ShopPageState extends State<ShopPage> {
           ),
         ],
       ),
+      drawer: Drawer(),
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: BlocBuilder<ProductsBloc, ProductsState>(
